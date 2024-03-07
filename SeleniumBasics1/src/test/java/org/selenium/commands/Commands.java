@@ -7,6 +7,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -251,6 +252,42 @@ public void validatePromptAlert()
 	String actual=aftermessage.getText();
 	String expected="You entered Neo";
 	Assert.assertEquals(actual, expected, "invalid message");
+	
+}
+@Test
+
+public void verifyRightClick()
+{
+	driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+	
+	WebElement rightclickme=driver.findElement(By.xpath("//span[@class='context-menu-one btn btn-neutral']"));
+	
+	Actions action=new Actions(driver);
+	action.contextClick( rightclickme).build().perform();
+	
+}
+@Test
+	public void verifyDoubleClick()
+	{
+	driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+	WebElement doubleclick=driver.findElement(By.xpath("//button[text()='Double-Click Me To See Alert']"));
+	Actions action=new Actions(driver);
+	action.doubleClick(doubleclick).build().perform();
+	Alert alert=driver.switchTo().alert();
+	String message=alert.getText();
+	
+	System.out.println(message);
+	
+	alert.accept();
+	}
+@Test
+public void verifyDragandDrop()
+{
+	driver.get("https://demoqa.com/droppable");
+	WebElement drag=driver.findElement(By.xpath("//div[@id='draggable']"));
+	WebElement drop=driver.findElement(By.xpath("//div[@id='droppable']"));
+	Actions action=new Actions(driver);
+	action.dragAndDrop(drag, drop).build().perform();
 	
 }
 	
