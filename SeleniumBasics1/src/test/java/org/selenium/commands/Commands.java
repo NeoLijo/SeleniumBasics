@@ -305,7 +305,7 @@ public void verifyDragandDrop()
 		Actions action=new Actions(driver);
 		action.moveToElement(mainitem2).build().perform();
 		WebElement sub=driver.findElement(By.xpath("//a[text()='SUB SUB LIST »']"));
-		action.doubleClick(sub).build().perform();
+		//action.doubleClick(sub).build().perform();
 		
 	}
 }
