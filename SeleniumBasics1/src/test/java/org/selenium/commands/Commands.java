@@ -134,8 +134,7 @@ public class Commands extends BrowserLaunch {
 		select.selectByValue("AMERICAN SAMOA");
 		WebElement getCountryName =select.getFirstSelectedOption();
 		System.out.println(getCountryName.getText());
-		
-	}
+			}
 	@Test
 	
 	public void verifyTotalNumberofDropdownValues()
@@ -205,20 +204,20 @@ public class Commands extends BrowserLaunch {
 		}
 		driver.switchTo().window(parentwindowhandleid);
 	}
-	
 			
 	
 @Test
 public void validateSimpleAlert()
 {
 	driver.get("https://demoqa.com/alerts");
-	WebElement clickmebutton=driver.findElement(By.id("alertButton"));
+	//WebElement clickmebutton=driver.findElement(By.id("alertButton"));
+	WebElement clickmebutton=driver.findElement(By.xpath("//button[@id='alertButton']"));
 	clickmebutton.click();
 	Alert alert=driver.switchTo().alert();
 	String clicktext=alert.getText();
 	System.out.println( clicktext);
 	alert.accept();
-				
+			
 }
 @Test
 public void validateConfirmationAlert()
@@ -259,9 +258,7 @@ public void validatePromptAlert()
 public void verifyRightClick()
 {
 	driver.get("https://demo.guru99.com/test/simple_context_menu.html");
-	
 	WebElement rightclickme=driver.findElement(By.xpath("//span[@class='context-menu-one btn btn-neutral']"));
-	
 	Actions action=new Actions(driver);
 	action.contextClick( rightclickme).build().perform();
 	
@@ -275,9 +272,7 @@ public void verifyRightClick()
 	action.doubleClick(doubleclick).build().perform();
 	Alert alert=driver.switchTo().alert();
 	String message=alert.getText();
-	
 	System.out.println(message);
-	
 	alert.accept();
 	}
 @Test
@@ -288,7 +283,30 @@ public void verifyDragandDrop()
 	WebElement drop=driver.findElement(By.xpath("//div[@id='droppable']"));
 	Actions action=new Actions(driver);
 	action.dragAndDrop(drag, drop).build().perform();
-	
+	}
+	@Test
+	public void VerifyDragAndDropOffset()
+	{
+		driver.get("https://demoqa.com/dragabble");
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+	    js.executeScript("window.scrollTo(0,document.body.scrollHeight) ");
+		WebElement drag=driver.findElement(By.xpath("//div[@id='dragBox']"));
+		Actions action=new Actions(driver);
+		action.dragAndDropBy(drag,150,150).build().perform();
+		
+	}
+	@Test
+	public void verifyMoveToElement()
+	{
+		driver.get("https://demoqa.com/menu/");
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+	    js.executeScript("window.scrollTo(0,document.body.scrollHeight) ");
+		WebElement mainitem2=driver.findElement(By.xpath("//a[text()='Main Item 2']"));
+		Actions action=new Actions(driver);
+		action.moveToElement(mainitem2).build().perform();
+		WebElement sub=driver.findElement(By.xpath("//a[text()='SUB SUB LIST »']"));
+		action.doubleClick(sub).build().perform();
+		
+	}
 }
-	
-}
+
