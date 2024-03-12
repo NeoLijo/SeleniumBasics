@@ -48,7 +48,8 @@ public class Commands extends BrowserLaunch {
 		//System.out.println(pagetitle);
 		
 	}
-	//@Test
+	@Test
+	
 	public void verifyIsSelected()
 	{
 		boolean isFemaleSelected;
@@ -57,14 +58,15 @@ public class Commands extends BrowserLaunch {
 		WebElement radioButtonFemale =	driver.findElement(By.xpath("//input[@id='gender-female']"));
 		isFemaleSelected= radioButtonFemale.isSelected();//actual result
 		Assert.assertFalse( isFemaleSelected,"radio button is selected");
+		System.out.println(isFemaleSelected);
 		radioButtonFemale.click();
 	    isFemaleSelected= radioButtonFemale.isSelected();
-	    Assert.assertFalse( isFemaleSelected,"radio button is not selected");
+	    Assert.assertTrue( isFemaleSelected,"radio button is not selected");
 		System.out.println("female element after click: "+isFemaleSelected);
 		
 		driver.close();
 	}
-	//@Test
+	@Test
 	public void verifyIsEnabled()
 		{
 		boolean isSubscribeEnabled;
@@ -78,10 +80,10 @@ public class Commands extends BrowserLaunch {
 			 
 			boolean isSubscribeEnabledAfterClick= subscribeButton.isEnabled();
 			Assert.assertTrue( isSubscribeEnabled,"Subscibe button is not enabled");
-			System.out.println("female element after click: "+isSubscribeEnabledAfterClick);
+			System.out.println("subscribe element after click: "+isSubscribeEnabledAfterClick);
 			driver.close();
 		}
-	//@Test
+	@Test
 	public void verifyIsDisplayed()
 	{
 		boolean isVoteDisplayed;
@@ -93,7 +95,7 @@ public class Commands extends BrowserLaunch {
 		System.out.println("Vote element before click: "+isVoteDisplayed);
 		voteButton.click();
 	    boolean isVoteDisplayedAfterClick= voteButton.isDisplayed();
-	    Assert.assertFalse(isVoteDisplayed,"Subscibe button is not enabled");
+	    Assert.assertTrue(isVoteDisplayed,"Subscibe button is not enabled");
 	    System.out.println("Vote element after click: "+isVoteDisplayedAfterClick);
 		driver.close();
 
@@ -112,13 +114,13 @@ public class Commands extends BrowserLaunch {
 		emailField.sendKeys("neomjose@gmail.com");
 		WebElement passwordField=driver.findElement(By.xpath("//input[@id='Password']"));
 	    passwordField.sendKeys("neojose@1234");
-	    WebElement lastlogin=driver.findElement(By.xpath("//input[@id='button-1 login-button']"));
+	    WebElement lastlogin=driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
 	    lastlogin.click();
-	    WebElement afterLoginMailId=driver.findElement(By.xpath("//a[text()=neomjose@gmail.com]"));
-	    afterLoginMailId.click();
-	    String  actualLoginMailId= "neomjose@gmail.com";
-	    Assert.assertEquals( afterLoginMailId.getText(),actualLoginMailId,"Mail id is wrong");
-	    System.out.println("afterLoginMailId.getText()");
+	    WebElement afterLoginMailId=driver.findElement(By.xpath("//a[text()='neomjose@gmail.com']"));
+	    String actual=afterLoginMailId.getText();
+	    String expected= "neomjose@gmail.com";
+	    Assert.assertEquals(actual,expected,"Mail id is wrong");
+	    System.out.println(actual);
 		 
 	}
 	@Test
@@ -130,14 +132,14 @@ public class Commands extends BrowserLaunch {
 		WebElement country =driver.findElement(By.xpath("//select[@name='country']"));
 		 Select select=new Select(country); 	
 		//select.selectByVisibleText("INDIA");
-		//select.selectByIndex(5);
+		//select.selectByIndex(6);
 		select.selectByValue("AMERICAN SAMOA");
 		WebElement getCountryName =select.getFirstSelectedOption();
 		System.out.println(getCountryName.getText());
 			}
 	@Test
 	
-	public void verifyTotalNumberofDropdownValues()
+		public void verifyTotalNumberofDropdownValues()
 	{
 		driver.get("https://demo.guru99.com/test/newtours/register.php");
 		WebElement country =driver.findElement(By.xpath("//select[@name='country']"));
@@ -159,10 +161,11 @@ public class Commands extends BrowserLaunch {
 	    select.selectByVisibleText("Yellow");
 	    List<WebElement>listofselectedvalues=select.getAllSelectedOptions();
 	    for(WebElement e:listofselectedvalues) {
-	    	System.out.println(e.getText());
 	    	
+	    	System.out.println(e.getText());
 	    }
 	    select.deselectByValue("Red");
+	    
 	}
 
 	@Test
@@ -187,6 +190,7 @@ public class Commands extends BrowserLaunch {
 		WebElement clickhere= driver.findElement(By.xpath("//a[text()='Click Here']"));
 		clickhere.click();
 		Set<String> windowhandlesid=driver.getWindowHandles();
+		System.out.println(windowhandlesid);
 		Iterator<String>value=windowhandlesid.iterator();
 		while(value.hasNext())
 		{
@@ -210,7 +214,8 @@ public class Commands extends BrowserLaunch {
 public void validateSimpleAlert()
 {
 	driver.get("https://demoqa.com/alerts");
-	//WebElement clickmebutton=driver.findElement(By.id("alertButton"));
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+    js.executeScript("window.scrollTo(0,document.body.scrollHeight) ");
 	WebElement clickmebutton=driver.findElement(By.xpath("//button[@id='alertButton']"));
 	clickmebutton.click();
 	Alert alert=driver.switchTo().alert();
@@ -305,8 +310,34 @@ public void verifyDragandDrop()
 		Actions action=new Actions(driver);
 		action.moveToElement(mainitem2).build().perform();
 		WebElement sub=driver.findElement(By.xpath("//a[text()='SUB SUB LIST »']"));
-		//action.doubleClick(sub).build().perform();
+		action.doubleClick(sub).build().perform();
 		
 	}
+	@Test
+	public void verifyJavaScriptClickandSendkeys()
+	{
+		driver.get("https://demowebshop.tricentis.com/");
+		JavascriptExecutor js=(JavascriptExecutor) driver;
+		js.executeScript("document.getElementById('newsletter-email').value='test@test.com'");
+		js.executeScript("document.getElementById('newsletter-subscribe-button').click()");
+		}
+	@Test
+	public void verifyVerticalSroll()
+	{
+		driver.get("https://demowebshop.tricentis.com");
+		JavascriptExecutor js=(JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+		
+	}
+	@Test
+	
+	public void verifyScreenShot()
+	{
+		driver.get("https://demowebshop.tricentis.com");
+		String actualTitle=driver.getTitle();
+		String expectedTitle="demo webs hop";
+        Assert.assertEquals(actualTitle,expectedTitle,"Invalid Title");
+	}
 }
+
 

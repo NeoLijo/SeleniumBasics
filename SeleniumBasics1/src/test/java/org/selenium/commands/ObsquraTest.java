@@ -112,8 +112,9 @@ public void verifyRedColorSelectFromDropdown()
 	Select select=new Select(colorselection);
 	select.selectByVisibleText("Red");
 	//select.selectByIndex("0")
-	String actual="Red";
-	Assert.assertEquals(actual,"Red","invalid color");
+	
+    WebElement selected=select.getFirstSelectedOption();
+	Assert.assertEquals(selected.getText(),"Red","invalid color");
 	System.out.println(" Red color is selected");
 			
 }
@@ -127,8 +128,10 @@ public void verifyYellowColorSelectFromDropdown()
 	Select select=new Select(colorselection);
 	select.selectByVisibleText("Yellow");
 	//select.selectByIndex("1");
-	String actual="Yellow";
-	Assert.assertEquals(actual,"Yellow","invalid color");
+	
+	WebElement selected=select.getFirstSelectedOption();
+	//System.out.println("");
+	Assert.assertEquals(selected.getText(),"Yellow","invalid color");
 	System.out.println(" Yellow color is selected");
 		
 }
@@ -143,8 +146,9 @@ public void verifyGreenColorSelectFromDropdown()
 	Select select=new Select(colorselection);
 	select.selectByVisibleText("Green");
 	//select.selectByIndex("2");
-	String actual="Green";
-	Assert.assertEquals(actual,"Green","invalid color");
+	
+	WebElement selected=select.getFirstSelectedOption();
+	Assert.assertEquals(selected.getText(),"Green","invalid color");
 	System.out.println(" Green color is selected");
 
 		}
